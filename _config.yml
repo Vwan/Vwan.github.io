@@ -283,8 +283,8 @@ sidebar:
 links_title: Links
 #links_layout: block
 #links_layout: inline
-#links:
-  Title: [阳志平的网志](http://www.yangzhiping.com/)
+links:
+  Title: http://www.yangzhiping.com/
 
 
 # ---------------------------------------------------------------
