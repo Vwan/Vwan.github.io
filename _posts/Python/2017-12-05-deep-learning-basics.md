@@ -95,12 +95,12 @@ suppose you want to expose your local folder to the docker container, you can do
 
    >  On Windows, you can not directly map Windows directory to your container. Because your containers are reside inside a VirtualBox VM. So your `docker -v` command actually maps the directory between the VM and the container.
    >
-   > So you have to do it in two steps:
+   >  So you have to do it in two steps:
    >
-   > - Map a Windows directory to the VM through VirtualBox manager
-   > - Map a directory in your container to the directory in your VM
+   >  - Map a Windows directory to the VM through VirtualBox manager
+   >  - Map a directory in your container to the directory in your VM
    >
-   > You better use the Kitematic UI to help you. It is much eaiser.
+   >  You better use the Kitematic UI to help you. It is much eaiser.
 
    [boot2docker - Shared folder in Docker. With Windows. Not only "C/user/" path - Stack Overflow](https://stackoverflow.com/questions/33966225/shared-folder-in-docker-with-windows-not-only-c-user-path)
 
@@ -173,3 +173,6 @@ for s in jieba.cut(words):
 print(data)
 ```
 
+### N-Gram
+
+Google n-gram viewer
