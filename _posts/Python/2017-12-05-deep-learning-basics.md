@@ -176,3 +176,93 @@ print(data)
 ### N-Gram
 
 Google n-gram viewer
+
+## 使用Tensorflow
+
+[一文读懂tensorflow](http://www.cnblogs.com/wangxiaocvpr/p/5902086.html)
+
+开源项目: deep_recommend_system
+
+### 1. 准备训练数据
+
+建议TFRecrods格式。
+
+### 2. 定义命令行参数
+
+tensorflow.app.flags
+
+```
+# define parameters
+flags = tf.app.flags
+FLAGS = flags.FLAGS
+flags.DEFINE_float("learning_rate" 0.01, 'Initial learning rate')
+flags.DEFINE_integer
+flags.DEFINE_string
+flags.DEFINE_float
+```
+
+### 3. 定义神经网络模型
+
+简单：创建多个Variable即可
+
+复杂：tf.variable_scope(), tf.get_variables()
+
+```
+# define the model
+input_units = FEATURE_SIZE
+hidden1_units = 10
+hidden2_units = 10
+output_units = LABEL_SIZE
+def full_connect(inputs, weights_shape, biases_shape):
+	with tf.device('/cpu:0'):
+		weights = tf.get_variable("weights", weights_shape, 	initializer=tf.random_normal_initializer())
+		biases = tf.get_variable("biases", biases_shape, 	initializer=tf.random_normal_initializer())
+	return tf.matmul(inputs, weights) + biases
+```
+
+### 4. 使用不同的优化算法(Optimizer)
+
+```
+print("Use the optimizer: {}".format(FLAGS.optimizer))
+if FLAGS.optimizer == "sgd":
+	optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+```
+
+### 5. Online Learning vs Continuous Learning
+
+Online Learning: 支持在线数据不断优化模型
+
+Continuous Learning: 训练即使被中断，也能继续上次的训练结果继续优化模型
+
+```
+ xxxxxxxxxx tf.train.Saver() # 保存成checkpoint,用于下一次优化
+```
+
+### 6. 使用TensorBoard优化参数
+
+TensorBoard: 图形化攻击
+
+```
+tf.scalar_summary('loss', loss)
+```
+
+### 7. 分布式Tensorflow应用
+
+```
+test.py --ps_hosts=<IP addrs> --worker_hosts=<ip addrs> --job_name=ps --task_index=0
+test.py --ps_hosts=<IP addrs> --worker_hosts=<ip addrs> --job_name=worker --task_index=1
+```
+
+- ps: 整个训练集群的参数服务器
+  - 保存模型的Variable
+- worker: 计算模型梯度的节点(operator)，得到的梯度向量会交付给ps更新模型
+- task: 用task_index来区分worker的工作任务
+- device：具体的CPU/GPU,通常PS绑定到CPU，worker绑定到GPU
+- in-graph, between-graph:
+  - in-graph:  整个集群由一个client来构建graph，且由其提交graph到集群中。其他worker只负责处理梯度计算的任务
+  - between-graph: 一个集群中多个worker可以构建graph，但由于worker运行的代码相同因此构建的graph也相同，并且参数都保存到相同的ps中保证训练同一个模型，这样多个worker都可以构建graph和读取训练数据，适合大数据场景
+
+### 8. Cloud Machine Learning
+
+
+
