@@ -44,7 +44,7 @@ def extract_config_files(src, target):
         copy2(os.path.join(src, dir, "config.xml"), temp_target)
 ```
 
-2. Connect both servers using NET USE command, and call the above extract function. Close the connection in the end
+1. Connect both servers using NET USE command, and call the above extract function. Close the connection in the end
 
    ```
    old_jenkins_server = "<old server>"
@@ -66,7 +66,7 @@ def extract_config_files(src, target):
 
 ## Go Further
 
-Now to train ourselves with more Jenkins knowledge, we use another solution to solve the same problem. But remember in real case, always use the one that cost less and solve quickly.
+Now to train ourselves with more Jenkins knowledge, we use another solution to solve the same problem. But remember in real case, always use the one that cost less and get things done quickly.
 
 To do this, we use [Jenkins Python api](https://github.com/salimfadhley/jenkinsapi), there are also other similar apis, but this one is more convenient for me.
 
@@ -80,7 +80,6 @@ Planned Steps for migrating Jobs:
   old_server = Jenkins(old_server_url)
   ```
 
-  ​
 
 - Get all the job list from old server
 
@@ -91,7 +90,72 @@ jobs = old_server.get_jobs()
 ```
 
 - Copy all the job config files from old server to a shared place
+
+```
+def backup_files(src, target):
+    copy2(src.decode("utf-8"), target.decode("utf-8"))
+    
+def backup_job_configs(jobs, src, target):
+    for job in jobs:
+        jobname, job_obj = job
+        src = os.path.join(src_root, "jobs", jobname, "config.xml").encode("utf-8")
+        target_path = os.path.join(target_root, "jobs", jobname)
+        if not os.path.exists(target_path):
+            os.mkdir(target_path)
+        target = os.path.join(target_path, "config.xml").encode("utf-8")
+        backup_files(src, target)
+```
+
 - Create new jobs on new server from the config files
+
+```
+def create_new_job(server, jobname, xml):
+    with open(xml, encoding="utf-8") as file:
+        config = file.read()
+
+def create_jobs(server, jobs, xml_path):
+    for job in jobs:
+        try:
+            jobname, _ = job
+            if not job_created(server, jobname):
+                create_new_job(server, jobname, os.path.join(os.path.join(xml_path, "jobs",), jobname + "_config.xml"))
+                if job_created(server, jobname):
+                    print(f"{jobname} is created successful")
+                else:
+                    print(f"{jobname} is NOT created")
+        except Exception as e:
+            print(jobname.encode("utf-8"), "fail with error: ", e.__str__().encode("utf-8"))
+            continue
+```
+
+Now new jobs are created on the new Jenkins server.
+
+Same can be applied to Nodes.
+
+- Get all nodes from the old server
+
+```
+nodes = old_server.get_nodes()
+```
+
+- Create nodes on the new server
+
+  ```
+  def create_nodes(server, nodes):
+      for key, value in nodes.iteritems():
+           if key != "master":
+               server.create_node(key , remote_fs='c:\jenkins', num_executors=1)
+  ```
+
+- you can also delete nodes if something gets wrong and you want to start over
+
+```
+def delete_nodes(new_server):
+    nodes = new_server.get_nodes()
+    for key, value in nodes.iteritems():
+         if key != "master":
+             new_server.delete_node(key )
+```
 
 
 
@@ -100,6 +164,4 @@ To be continued
 ## To Go Even Further
 
 - Encoding issue
-
-
 
