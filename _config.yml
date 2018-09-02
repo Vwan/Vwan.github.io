@@ -310,7 +310,7 @@ auto_excerpt:
 
 # Post meta display settings
 post_meta:
-  item_text: true
+  item_text: false
   created_at: true
   updated_at: true
   categories: true
@@ -597,16 +597,16 @@ pace: true
 pace_theme: pace-theme-minimal
 
 # Canvas-nest
-canvas_nest: true
+canvas_nest: false
 
 # three_waves
-three_waves: tree
+three_waves: false
 
 # canvas_lines
-canvas_lines: tree
+canvas_lines: false
 
 # canvas_sphere
-canvas_sphere: tree
+canvas_sphere: false
 
 # Only fit scheme Pisces
 # Canvas-ribbon
