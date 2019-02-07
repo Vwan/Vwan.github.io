@@ -286,7 +286,6 @@ links_title: Links
 links:
   阳志平的网志: http://www.yangzhiping.com/
   大妈: http://zoomquiet.io/
-  我的中医wiki: /tcmwiki
 
 
 # ---------------------------------------------------------------
@@ -381,9 +380,9 @@ han: false
 
 # Disqus
 disqus:
-  enable: true
+  enable: false
   shortname:
-  count: true
+  count: false
   # hide comments (visitors need to click to load the comments)
   # count need to be false when hide is true
   hide: false
