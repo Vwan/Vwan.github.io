@@ -1,3 +1,4 @@
+---
 title: Jenkins Pass Parameters within Build using Groovy
 date: 2018-08-14 21:05:13 +0800
 layout: post
@@ -6,7 +7,7 @@ categories:
 - Python
   tags:
 - Python
-
+---
 # Background
 
 We have a job which has two build steps:

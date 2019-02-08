@@ -1,3 +1,4 @@
+---
 title: Jenkins Pass Parameters to downstream jobs
 date: 2018-08-14 21:05:13 +0800
 layout: post
@@ -6,7 +7,7 @@ categories:
 - Python
   tags:
 - Python
-
+---
 # Background
 
 After Jenkins is upgraded from 1.0 to 2.0, our master job stops to pass parameter values to its downstream jobs.

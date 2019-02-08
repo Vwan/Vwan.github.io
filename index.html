@@ -1,3 +1,10 @@
 ---
 layout: index
 ---
+{% raw %}
+{% if post.content contains '<!--more-->' %}
+ {{ post.content | split:'<!--more-->' | first }}
+{% else %}
+ {{ post.excerpt }}
+{% endif %}
+{% endraw %}
