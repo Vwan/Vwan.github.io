@@ -7,6 +7,7 @@ categories:
 - Python
   tags:
 - Python
+excerpt_separator: <!--more-->
 ---
 # Background
 
@@ -15,7 +16,7 @@ After Jenkins is upgraded from 1.0 to 2.0, our master job stops to pass paramete
 When in Jenkins 1.0, we have a master-slave job definitions, where a BUILD_PATH parameter is defined in master job, and its value will be passed directly to the slaves at runtime. On the slave machines, no additional work is needed except referencing it in the build steps, e.g. %BUILD_PATH % a windows batch command step.
 
 But this stopped working in Jenkins 2.0
-
+<!--more-->
 # Analysis
 
 In Jenkins 2.0, with [Parameterized Trigger](https://wiki.jenkins.io/display/JENKINS/Parameterized+Trigger+Plugin) plugin, when you want to pass a parameter to downstream,
