@@ -9,6 +9,7 @@ categories:
 - Python
 excerpt_separator: <!--more-->
 ---
+
 # Background
 
 After Jenkins is upgraded from 1.0 to 2.0, our master job stops to pass parameter values to its downstream jobs.

@@ -6,8 +6,6 @@ categories:
 - Python
 tags:
 - Python
-
-
 ---
 
 ## Background
